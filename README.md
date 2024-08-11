@@ -23,6 +23,84 @@ For the "SmartHire: Intelligent Candidate Selection System" using a microservice
      - `PUT /jobs/{id}`
      - `DELETE /jobs/{id}`
 
+     Job Model Attributes
+id:
+
+Type: Long
+Description: A unique identifier for the job posting.
+title:
+
+Type: String
+Description: The title or name of the job position.
+description:
+
+Type: String
+Description: A detailed description of the job responsibilities, qualifications, and other relevant details.
+location:
+
+Type: String
+Description: The geographical location where the job is based.
+companyName:
+
+Type: String
+Description: The name of the company offering the job.
+employmentType:
+
+Type: String
+Description: The type of employment (e.g., Full-Time, Part-Time, Contract, Internship).
+salaryRange:
+
+Type: String
+Description: The salary range offered for the position (e.g., "50,000 - 70,000 USD").
+requirements:
+
+Type: List<String>
+Description: A list of required qualifications, skills, and experience for the job.
+responsibilities:
+
+Type: List<String>
+Description: A list of key responsibilities associated with the job.
+createdAt:
+
+Type: LocalDateTime
+Description: The date and time when the job posting was created.
+updatedAt:
+
+Type: LocalDateTime
+Description: The date and time when the job posting was last updated.
+postedBy:
+
+Type: User (or String if you only store the user ID or name)
+Description: The user or recruiter who posted the job.
+status:
+
+Type: String
+Description: The current status of the job posting (e.g., Open, Closed, Filled).
+skills:
+
+Type: List<String>
+Description: A list of specific skills required for the job.
+experienceLevel:
+
+Type: String
+Description: The experience level required for the position (e.g., Entry-Level, Mid-Level, Senior-Level).
+industry:
+
+Type: String
+Description: The industry to which the job belongs (e.g., IT, Finance, Healthcare).
+benefits:
+
+Type: List<String>
+Description: A list of benefits offered with the job (e.g., Health Insurance, Retirement Plans).
+educationLevel:
+
+Type: String
+Description: The minimum education level required for the job (e.g., Bachelor's Degree, Master's Degree).
+applications:
+
+Type: List<Application>
+Description: A list of applications submitted for this job posting.
+
 3. **Application Service**
    - **Functionality**: Submitting and managing job applications.
    - **Tech Stack**: Spring Boot, Spring Data JPA, Apache Tika for CV parsing.
