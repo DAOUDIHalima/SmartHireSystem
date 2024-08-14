@@ -43,11 +43,16 @@ public class Job {
     @Column(name = "created_by")
     private String createdBy;
     @Column(name = "status")
-    private String status;
+    private String status;// Full-Time, Part-Time, etc.
     @Column(name = "experience_level")
     private String experienceLevel;
     @Column(name = "education_level")
     private String educationLevel;
+    @ElementCollection
+    private List<String> skills;
+
+    @OneToMany
+    private List<Application> applications;
 
 
 
