@@ -4,10 +4,10 @@ import org.apache.catalina.User;
 
 public interface UserService {
 
-    User findUserById(int id);
+    User findById(int id);
 
-    void deleteUserById(int id);
+    void deleteById(int id);
 
-    User updateUser(User user);
+    User update(User user);
 
 }

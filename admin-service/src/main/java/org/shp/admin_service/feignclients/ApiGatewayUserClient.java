@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(name = "API-GATEWAY", path = "/api/user")
 public interface ApiGatewayUserClient {
     @GetMapping("/id/{id}")
-    User findUserById(@PathVariable Long id);
+    User findById(@PathVariable Long id);
 
     @PutMapping("/update")
-    User updateUser(@RequestBody User user);
+    User update(@RequestBody User user);
 
 
 }

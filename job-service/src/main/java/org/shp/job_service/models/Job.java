@@ -51,8 +51,8 @@ public class Job {
     @ElementCollection
     private List<String> skills;
 
-    @OneToMany
-    private List<Application> applications;
+    //@OneToMany
+   // private List<ApplicationDto> applications;
 
 
 

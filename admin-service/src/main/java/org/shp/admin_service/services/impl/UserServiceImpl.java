@@ -13,18 +13,18 @@ public class UserServiceImpl implements UserService {
 
 
     public void banUSer(long id) {
-        User user = apiGatewayUserClient.findUserById(id);
+        User user = apiGatewayUserClient.findById(id);
         if(user != null) {return;}
         user.setEnabled(false);
-        apiGatewayUserClient.updateUser(user);
+        apiGatewayUserClient.update(user);
     }
 
 
     public void unbanUSer(long id) {
-        User user = apiGatewayUserClient.findUserById(id);
+        User user = apiGatewayUserClient.findById(id);
         if(user != null) {return;}
         user.setEnabled(true);
-        apiGatewayUserClient.updateUser(user);
+        apiGatewayUserClient.update(user);
 
 
     }
