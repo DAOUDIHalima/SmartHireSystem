@@ -15,7 +15,6 @@ public interface JobRepository extends JpaRepository<Job, Long> {
 
     public void deleteById(long id);
 
-    public Job updateById(long id);
 
     public Job save(Job job);
 

@@ -17,7 +17,7 @@ import java.util.List;
 public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(name = "title")
     private String title;
     @Column(name = "description")
@@ -51,8 +51,6 @@ public class Job {
     @ElementCollection
     private List<String> skills;
 
-    //@OneToMany
-   // private List<ApplicationDto> applications;
 
 
 

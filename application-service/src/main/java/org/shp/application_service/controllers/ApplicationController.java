@@ -21,8 +21,8 @@ public class ApplicationController {
     private ModelMapper modelMapper;
 
     @GetMapping("/{id}")
-    public List<ApplicationDto> findById(@PathVariable("id") String id) {
-        List<Application> applications = applicationService.findById(Long.valueOf(id));
+    public List<ApplicationDto> findById(@PathVariable("id") long id) {
+        List<Application> applications = applicationService.findById(id);
         List<ApplicationDto> applicationDtos = new ArrayList<>();
         for (Application application : applications) {
             ApplicationDto applicationDto = modelMapper.map(application, ApplicationDto.class);
@@ -33,11 +33,11 @@ public class ApplicationController {
     }
 
     @GetMapping("/id/{id}")
-    public void deleteApplicationById(@PathVariable("id") String id) {
-        applicationService.deleteByJobId(Long.valueOf(id));
+    public void deleteApplicationById(@PathVariable("id") long id) {
+        applicationService.deleteByJobId(id);
     }
 
-    @GetMapping
+    @GetMapping("/{name}")
     public List<ApplicationDto> findByApplicantName(String name) {
         List<Application> applications = applicationService.findByApplicantName(name);
         List<ApplicationDto> applicationDtos = new ArrayList<>();

@@ -18,7 +18,7 @@ public interface JobService {
 
     public void deleteById(long id);
 
-    public Job updateById(long id);
+    public Job updateJob(Job job);
 
     public Job save(Job job);
 }
