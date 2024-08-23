@@ -5,6 +5,7 @@ import org.modelmapper.ModelMapper;
 import org.shp.user_service.models.ERole;
 import org.shp.user_service.models.Role;
 import org.shp.user_service.models.User;
+import org.shp.user_service.payloads.JwtResponse;
 import org.shp.user_service.payloads.LoginRequest;
 import org.shp.user_service.payloads.MessageResponse;
 import org.shp.user_service.payloads.SignupRequest;
@@ -20,6 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.shp.user_service.jwt.JwtUtils;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -43,18 +45,32 @@ public class AuthService {
 
     @Autowired
     ModelMapper modelMapper;
+    @Autowired
+    JwtUtils jwtUtils;
 
     public ResponseEntity<?> authenticateUser(LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(item -> item.getAuthority())
+                .collect(Collectors.toList());
 
-        User user = modelMapper.map(userDetails, User.class);
-
-
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(new JwtResponse(jwt,
+                userDetails.getId(),
+                userDetails.getUsername(),
+                userDetails.getEmail(),
+                userDetails.getFirstName(),
+                userDetails.getLastName(),
+                userDetails.getBirthDate(),
+                userDetails.getCreatedAt(),
+                userDetails.getPhoneNumber(),
+                userDetails.getBio(),
+                userDetails.isEnabled(),
+                roles));
     }
 
 
