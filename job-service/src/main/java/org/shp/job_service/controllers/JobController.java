@@ -4,70 +4,117 @@ import org.modelmapper.ModelMapper;
 import org.shp.job_service.dtos.JobDto;
 import org.shp.job_service.models.Job;
 import org.shp.job_service.services.facade.JobService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/jobs")
 public class JobController {
+    private static final Logger logger = LoggerFactory.getLogger(JobController.class);
 
-    @Autowired
-    private JobService jobService;
+    private final JobService jobService;
+    private final ModelMapper modelMapper;
 
-    @Autowired
-    private ModelMapper modelMapper;
+    //injection par constructeur
+    JobController(JobService jobService,
+                  ModelMapper modelMapper){
+        this.jobService = jobService;
+        this.modelMapper = modelMapper;
+    }
+
+    @GetMapping(value = "/")
+    public ResponseEntity findAll() {
+        try {
+            List<JobDto> jobs = jobService.findAll();
+            return jobs.isEmpty() ?
+                    ResponseEntity.noContent().build()
+                    :
+                    ResponseEntity.ok(jobs);
+        } catch (Exception e){
+            logger.error(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 
     @GetMapping(value = "/{id}", produces = "application/json")
-    public ResponseEntity<JobDto> findById(@PathVariable("id") long id) {
-        Job job = jobService.findById(id);
-        if (job == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+    public ResponseEntity findById(@PathVariable("id") long id) {
+        try {
+            JobDto job = jobService.findById(id);
+            return job == null ?
+                    ResponseEntity.noContent().build()
+                    :
+                    ResponseEntity.ok(modelMapper.map(job, JobDto.class));
+        } catch (Exception e){
+            logger.error(e.getMessage());
+            return ResponseEntity.internalServerError().build();
         }
-        JobDto jobDto = modelMapper.map(job, JobDto.class);
-        return ResponseEntity.ok(jobDto);
     }
 
-    @GetMapping("/title/{title}")
-    public List<JobDto> findByTitle(@PathVariable("title") String title) {
-        List<Job> jobs = jobService.findByTitle(title);
-        List<JobDto> jobDtos = new ArrayList<>();
-        for (Job job : jobs) {
-            jobDtos.add(modelMapper.map(job, JobDto.class));
+    @GetMapping("/bytitle/{title}")
+    public ResponseEntity findByTitle(@PathVariable("title") String title) {
+        try {
+            List<JobDto> jobs = jobService.findByTitle(title);
+            return jobs.isEmpty() ?
+                    ResponseEntity.noContent().build()
+                    :
+                    ResponseEntity.ok(jobs);
+        } catch (Exception e){
+            logger.error(e.getMessage());
+            return ResponseEntity.internalServerError().build();
         }
-        return jobDtos;
     }
 
-    @GetMapping("/location/{location}")
-    public List<JobDto> findByLocation(@PathVariable("location") String location) {
-        List<Job> jobs = jobService.findByLocation(location);
-        List<JobDto> jobDtos = new ArrayList<>();
-        for (Job job : jobs) {
-            jobDtos.add(modelMapper.map(job, JobDto.class));
+    @GetMapping("/bylocation/{location}")
+    public ResponseEntity findByLocation(@PathVariable("location") String location) {
+        try {
+            List<JobDto> jobs = jobService.findByLocation(location);
+            return jobs.isEmpty() ?
+                    ResponseEntity.noContent().build()
+                    :
+                    ResponseEntity.ok(jobs);
+        } catch (Exception e){
+            logger.error(e.getMessage());
+            return ResponseEntity.internalServerError().build();
         }
-        return jobDtos;
     }
 
-    @DeleteMapping("/id/{id}")
-    public void deleteById(@PathVariable("id") long id) {
-        jobService.deleteById(id);
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity deleteById(@PathVariable("id") long id) {
+        try {
+            jobService.deleteById(id);
+            return ResponseEntity.ok("deleted");// message ...
+        } catch (Exception e){
+            logger.error(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
-    @PutMapping("/")
-    public JobDto updateJob(@RequestBody JobDto jobDto) {
-        Job job = modelMapper.map(jobDto, Job.class);
-        return modelMapper.map(jobService.updateJob(job), JobDto.class);
+    // for update/save you can use the save same
+    @PutMapping("/update")
+    public ResponseEntity updateJob(@RequestBody JobDto jobDto) {
+        try {
+            Job job = modelMapper.map(jobDto, Job.class);
+            return ResponseEntity.ok(modelMapper.map(jobService.updateJob(job), JobDto.class));// message ...
+        } catch (Exception e){
+            logger.error(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
-    @PostMapping("/")
-    public JobDto save(@RequestBody JobDto jobDto) {
-        Job job = modelMapper.map(jobDto, Job.class);
-        job = jobService.save(job);
-        if (job == null) return null;
-        return modelMapper.map(job, JobDto.class);
+    @PostMapping("/save")
+    public ResponseEntity save(@RequestBody JobDto jobDto) {
+        try {
+            Job job = modelMapper.map(jobDto, Job.class);
+            job = jobService.save(job);
+            if (job == null) return null;
+            return ResponseEntity.ok(modelMapper.map(job, JobDto.class));
+        } catch (Exception e){
+            logger.error(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
     }
 }

@@ -7,15 +7,11 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface JobRepository extends JpaRepository<Job, Long> {
-    public Job findById(long id);
 
-    public List<Job> findByTitle(String title);
+    List<Job> findJobsByTitleIs(String title);
 
-    public List<Job> findByLocation(String location);
+    List<Job> findJobsByLocation(String location);
 
-    public void deleteById(long id);
-
-
-    public Job save(Job job);
+    void deleteJobById(long id);
 
 }

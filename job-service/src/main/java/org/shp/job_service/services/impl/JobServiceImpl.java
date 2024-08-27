@@ -1,39 +1,55 @@
 package org.shp.job_service.services.impl;
 
 
+import org.modelmapper.ModelMapper;
+import org.shp.job_service.dtos.JobDto;
 import org.shp.job_service.models.Job;
 import org.shp.job_service.repositories.JobRepository;
 import org.shp.job_service.services.facade.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class JobServiceImpl implements JobService {
 
     @Autowired
     private JobRepository jobRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Override
-    public Job findById(long id) {
-        return jobRepository.findById(id);
+    public List<JobDto> findAll() {
+        List<Job> jobs = jobRepository.findAll();
+        return jobs.stream().map(job -> modelMapper.map(job, JobDto.class)).collect(Collectors.toList());
     }
 
     @Override
-    public List<Job> findByTitle(String title) {
-        return jobRepository.findByTitle(title);
+    public JobDto findById(long id) {
+        Optional job = jobRepository.findById(id);
+        return modelMapper.map(job.get(), JobDto.class);
     }
 
     @Override
-    public List<Job> findByLocation(String location) {
-        return jobRepository.findByLocation(location);
+    public List<JobDto> findByTitle(String title) {
+        List<Job> jobs = jobRepository.findJobsByTitleIs(title);
+        return jobs.stream().map(job -> modelMapper.map(job, JobDto.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<JobDto> findByLocation(String location) {
+        List<Job> jobs = jobRepository.findJobsByLocation(location);
+        return jobs.stream().map(job -> modelMapper.map(job, JobDto.class)).collect(Collectors.toList());
     }
 
     @Override
     public void deleteById(long id) {
         jobRepository.deleteById(id);
-
     }
 
     @Override

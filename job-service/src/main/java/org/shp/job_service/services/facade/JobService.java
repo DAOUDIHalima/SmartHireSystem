@@ -1,5 +1,6 @@
 package org.shp.job_service.services.facade;
 
+import org.shp.job_service.dtos.JobDto;
 import org.shp.job_service.models.Job;
 import org.shp.job_service.repositories.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,15 +11,16 @@ import java.util.List;
 
 public interface JobService {
 
-    public Job findById(long id);
+    List<JobDto> findAll();
+    JobDto findById(long id);
 
-    public List<Job> findByTitle(String title);
+    List<JobDto> findByTitle(String title);
 
-    public List<Job> findByLocation(String location);
+    List<JobDto> findByLocation(String location);
 
-    public void deleteById(long id);
+    void deleteById(long id);
 
-    public Job updateJob(Job job);
+    Job updateJob(Job job);
 
-    public Job save(Job job);
+    Job save(Job job);
 }
