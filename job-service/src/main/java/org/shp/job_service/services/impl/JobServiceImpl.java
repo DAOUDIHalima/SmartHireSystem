@@ -7,8 +7,8 @@ import org.shp.job_service.models.Job;
 import org.shp.job_service.repositories.JobRepository;
 import org.shp.job_service.services.facade.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +18,9 @@ import java.util.stream.Collectors;
 @Service
 public class JobServiceImpl implements JobService {
 
+    private  KafkaTemplate<String, String> kafkaTemplate;
+
+    private static final String TOPIC = "new_jobs";
     @Autowired
     private JobRepository jobRepository;
     @Autowired
@@ -59,6 +62,7 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public Job save(Job job) {
+        kafkaTemplate.send(TOPIC, "New job posted: " + job.getTitle());
         return jobRepository.save(job);
     }
 }

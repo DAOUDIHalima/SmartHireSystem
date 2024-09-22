@@ -1,5 +1,4 @@
-package org.shp.notification_service.dtos;
-
+package org.shp.cvanalysis_service.dtos;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,8 +10,7 @@ import java.util.Set;
 
 @Getter
 @Setter
-public class CandidateDto extends UserDto{
-
+public class CandidateDto extends UserDto {
     private String cvFilePath;
     private Set<String> skills = new HashSet<>();
     private int experienceYears;
@@ -26,6 +24,5 @@ public class CandidateDto extends UserDto{
     private BigDecimal expectedSalary;
     private String languagesSpoken;
     private LocalDate availability;
-
-
 }
+

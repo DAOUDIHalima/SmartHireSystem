@@ -26,6 +26,5 @@ public class ApplicationServiceImpl implements ApplicationService {
     @Override
     public void deleteByJobId(Long id) {
         applicationRepository.deleteByJobId(id);
-
     }
 }

@@ -1,6 +1,7 @@
 package org.shp.notification_service.services.impl;
 
 import org.modelmapper.ModelMapper;
+import org.shp.notification_service.dtos.CandidateDto;
 import org.shp.notification_service.dtos.NotificationDto;
 import org.shp.notification_service.dtos.UserDto;
 import org.shp.notification_service.feign.UserClient;
@@ -49,9 +50,9 @@ public class NotificationServiceImpl implements NotificationService {
     }
 
     public void notifyCandidate(String message) {
-        List<UserDto> candidates =userClient.getAllCandidates();
-        for (UserDto userDto : candidates) {
-            sendNotification(userDto.getId(),message);
+        List<CandidateDto> candidates =userClient.getAllCandidates();
+        for (CandidateDto candidateDto : candidates) {
+            sendNotification(candidateDto.getId(),message);
         }
     }
 
