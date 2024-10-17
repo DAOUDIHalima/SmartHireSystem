@@ -31,15 +31,15 @@ public class UserController {
     private ModelMapper modelMapper;
 
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
         return authService.authenticateUser(loginRequest);
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+    public ResponseEntity<?> registerUser(@RequestBody SignupRequest signUpRequest) {
         return authService.registerUser(signUpRequest);
     }
-    @GetMapping("/candidates")
+   /* @GetMapping("/candidates")
     public List<CandidateDto> getAllCandidates() {
         List<Candidate> candidates = candidateRepository.findAll();
         List<CandidateDto> candidateDtos = new ArrayList<>();
@@ -51,6 +51,6 @@ public class UserController {
         }
 
         return candidateDtos;
-    }
+    }*/
 
 }
