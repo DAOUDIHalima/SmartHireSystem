@@ -21,25 +21,26 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UserController {
+
     @Autowired
-    private AuthService authService;
-    @Autowired
-    private UserRepository userRepository;
     private CandidateRepository candidateRepository;
 
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private AuthService authService;
+
     @PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
         return authService.authenticateUser(loginRequest);
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@RequestBody SignupRequest signUpRequest) {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
         return authService.registerUser(signUpRequest);
     }
-   /* @GetMapping("/candidates")
+    @GetMapping("/candidates")
     public List<CandidateDto> getAllCandidates() {
         List<Candidate> candidates = candidateRepository.findAll();
         List<CandidateDto> candidateDtos = new ArrayList<>();
@@ -51,6 +52,6 @@ public class UserController {
         }
 
         return candidateDtos;
-    }*/
+    }
 
 }

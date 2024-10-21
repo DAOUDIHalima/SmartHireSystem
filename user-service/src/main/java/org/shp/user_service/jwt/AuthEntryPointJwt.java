@@ -1,4 +1,4 @@
-package org.sop.apigateway.security.jwt;
+package org.shp.user_service.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.ServletException;

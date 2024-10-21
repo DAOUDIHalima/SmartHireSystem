@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 @Entity
@@ -27,6 +28,7 @@ public class User {
     private String firstname;
     @Column(name = "lastname")
     private String lastname;
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "birthdate")
     private LocalDate birthdate;
     @Column(name = "created_at")

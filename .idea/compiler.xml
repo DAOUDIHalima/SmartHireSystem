@@ -16,7 +16,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="ranking-service" target="21" />
+      <module name="ranking-service" target="1.5" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
@@ -27,7 +27,7 @@
       <module name="cvanalysis-service" options="-parameters" />
       <module name="job-service" options="-parameters" />
       <module name="notification-service" options="-parameters" />
-      <module name="ranking-service" options="-parameters" />
+      <module name="ranking-service" options="" />
     </option>
   </component>
 </project>
